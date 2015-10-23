@@ -1,7 +1,7 @@
 {
-  "name": "painman",
+  "name": "iCanPain",
   "version": "1.0.0",
-  "description": "painMan: An Ionic project",
+  "description": "iCanPain: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
