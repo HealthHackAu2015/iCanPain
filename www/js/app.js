@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'flexcalendar', 'pascalprecht.translate'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -85,6 +85,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/tabs.html'
   })
 
+  .state('calendar', {
+    url: '/history/calendar',
+    templateUrl: 'templates/history-calendar.html'
+  })
+
+  .state('charts', {
+    url: '/history/charts',
+    templateUrl: 'templates/history-charts.html'
+  })
+
+  .state('doctor', {
+    url: '/history/doctor',
+    templateUrl: 'templates/history-doctor.html'
+  })
   // Each tab has its own nav history stack:
 
   .state('tab.goals', {
