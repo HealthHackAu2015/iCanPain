@@ -36,16 +36,39 @@ angular.module('starter.controllers', [])
 
   $scope.$on('$ionicView.enter', function(e) { $scope.initChart(); });
 
+  $scope.getData = function() {
+    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
+    return data;
+  };
+
+  $scope.buildSeries = function() {
+    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
+
+    var series = {};
+    series.mood = [];
+    series.pain = [];
+
+    for (var i = 0; i < data.length; i++)
+    {
+        series.mood.push([data[i].Date, parseInt(data[i].Mood)]);
+        series.pain.push([data[i].Date, parseInt(data[i].Pain)]);
+    }
+
+    return series;
+  }
+
   $scope.initChart = function () {
     $(function () {
         $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {
+
+            var series = $scope.buildSeries();
 
             $('#container').highcharts({
                 chart: {
                     zoomType: 'x'
                 },
                 title: {
-                    text: 'USD to EUR exchange rate over time'
+                    text: 'Pain Impact over Time'
                 },
                 subtitle: {
                     text: document.ontouchstart === undefined ?
@@ -56,7 +79,7 @@ angular.module('starter.controllers', [])
                 },
                 yAxis: {
                     title: {
-                        text: 'Exchange rate'
+                        text: 'Pain Impact'
                     }
                 },
                 legend: {
@@ -90,9 +113,14 @@ angular.module('starter.controllers', [])
                 },
 
                 series: [{
-                    type: 'area',
-                    name: 'USD to EUR',
-                    data: data
+                    type: 'line',
+                    name: 'Mood',
+                    data: series.mood
+                },
+                {
+                    type: 'line',
+                    name: 'Pain',
+                    data: series.pain
                 }]
             });
         });
@@ -109,4 +137,17 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
+
+  $scope.clearData = function() {
+    window.localStorage.clear();
+  };
+
+  $scope.loadData = function(filename) {
+    var path = '/data/' + filename + '.csv';
+    $.get(path, function(csv) {
+        var data = $.csv.toObjects(csv);
+        window.localStorage.data = JSON.stringify(data);
+    });
+  };
+
 });
