@@ -4,20 +4,20 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
-  $scope.$on('$ionicView.enter', function(e) { $scope.initChart(); });
+  $scope.$on('$ionicView.enter', function(e) { initChart(); });
 
-  $scope.getData = function() {
+  var getData = function() {
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
     return data;
   };
 
   // parse a date in dd/mm/yyyy format
-  $scope.parseDate = function(input) {
+  var parseDate = function(input) {
     var parts = input.split('/');
     return Date.UTC(parts[2],parts[1]-1,parts[0]);
   };
 
-  $scope.buildSeries = function() {
+  var buildSeries = function() {
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
 
     var series = {};
@@ -26,7 +26,7 @@ angular.module('starter.controllers', [])
 
     for (var i = 0; i < data.length; i++)
     {
-        var date = $scope.parseDate(data[i].Date);
+        var date = parseDate(data[i].Date);
         series.mood.push([date, parseInt(data[i]['Pain slider score'])]);
         series.pain.push([date, parseInt(data[i]['Mood slider score'])]);
     }
@@ -34,9 +34,9 @@ angular.module('starter.controllers', [])
     return series;
   };
 
-  $scope.initChart = function () {
+  var initChart = function () {
     $(function () {
-        var series = $scope.buildSeries();
+        var series = buildSeries();
 
         $('#container').highcharts({
             chart: {
@@ -99,7 +99,7 @@ angular.module('starter.controllers', [])
             }]
         });
     });
-}
+};
 
 })
 
