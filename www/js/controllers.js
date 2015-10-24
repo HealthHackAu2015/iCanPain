@@ -11,6 +11,12 @@ angular.module('starter.controllers', [])
     return data;
   };
 
+  // parse a date in dd/mm/yyyy format
+  $scope.parseDate = function(input) {
+    var parts = input.split('/');
+    return Date.UTC(parts[2],parts[1]-1,parts[0])
+    }
+
   $scope.buildSeries = function() {
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
 
@@ -20,8 +26,9 @@ angular.module('starter.controllers', [])
 
     for (var i = 0; i < data.length; i++)
     {
-        series.mood.push([data[i].Date, parseInt(data[i].Mood)]);
-        series.pain.push([data[i].Date, parseInt(data[i].Pain)]);
+        var date = $scope.parseDate(data[i].Date);
+        series.mood.push([date, parseInt(data[i].Mood)]);
+        series.pain.push([date, parseInt(data[i].Pain)]);
     }
 
     return series;
