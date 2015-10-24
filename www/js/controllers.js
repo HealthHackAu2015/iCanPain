@@ -45,6 +45,37 @@ angular.module('starter.controllers', [])
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
+
+  $scope.initChart = function () {
+    $(function () { 
+        $('#container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Fruit Consumption'
+            },
+            xAxis: {
+                categories: ['Apples', 'Bananas', 'Oranges']
+            },
+            yAxis: {
+                title: {
+                    text: 'Fruit eaten'
+                }
+            },
+            series: [{
+                name: 'Jane',
+                data: [1, 0, 4]
+            }, {
+                name: 'John',
+                data: [5, 7, 3]
+            }]
+        });
+    });
+  };
+
+
+    $scope.initChart();
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
