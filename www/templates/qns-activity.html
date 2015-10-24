@@ -3,8 +3,12 @@
     <div class="list card">
       <div class="item item-divider">How is your activity?</div>
       <div class="item item-body">
-        <input type="range" min="0" max="10" step="1" ng-model="values.pain" />
-        <output>{{values.pain}}</output>
+				<div style=" overflow:hidden inherit;">
+					<div class="item range range-positive range-vertical" style="border: none; height:200px;">
+						<input type="range" min="0" max="10" step="1" ng-model="values.activity" />
+					</div>
+				</div>
+        <output>{{values.activity}}</output>
       </div>
     </div>
     <div class="button-bar">
