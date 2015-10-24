@@ -29,70 +29,67 @@ angular.module('starter.controllers', [])
 
   $scope.initChart = function () {
     $(function () {
-        $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {
+        var series = $scope.buildSeries();
 
-            var series = $scope.buildSeries();
-
-            $('#container').highcharts({
-                chart: {
-                    zoomType: 'x'
-                },
+        $('#container').highcharts({
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'Pain Impact over Time'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            yAxis: {
                 title: {
-                    text: 'Pain Impact over Time'
-                },
-                subtitle: {
-                    text: document.ontouchstart === undefined ?
-                            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-                },
-                xAxis: {
-                    type: 'datetime'
-                },
-                yAxis: {
-                    title: {
-                        text: 'Pain Impact'
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                plotOptions: {
-                    area: {
-                        fillColor: {
-                            linearGradient: {
-                                x1: 0,
-                                y1: 0,
-                                x2: 0,
-                                y2: 1
-                            },
-                            stops: [
-                                [0, Highcharts.getOptions().colors[0]],
-                                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                            ]
+                    text: 'Pain Impact'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
                         },
-                        marker: {
-                            radius: 2
-                        },
-                        lineWidth: 1,
-                        states: {
-                            hover: {
-                                lineWidth: 1
-                            }
-                        },
-                        threshold: null
-                    }
-                },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
 
-                series: [{
-                    type: 'line',
-                    name: 'Mood',
-                    data: series.mood
-                },
-                {
-                    type: 'line',
-                    name: 'Pain',
-                    data: series.pain
-                }]
-            });
+            series: [{
+                type: 'line',
+                name: 'Mood',
+                data: series.mood
+            },
+            {
+                type: 'line',
+                name: 'Pain',
+                data: series.pain
+            }]
         });
     });
 }
