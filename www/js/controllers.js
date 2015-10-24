@@ -160,6 +160,7 @@ angular.module('starter.controllers', [])
 
   $scope.clearData = function() {
     window.localStorage.clear();
+    window.location = "/#/first-time"
   };
 
   $scope.loadData = function(filename) {
@@ -179,6 +180,7 @@ angular.module('starter.controllers', [])
     userage: window.localStorage.userage || "",
     usermedicalcondition: window.localStorage.usermedicalcondition || "",
     userproductiveday: window.localStorage.userproductiveday || "",
+    userpainlocation: window.localStorage.userpainlocation || "",
   };
 
   $scope.$on('$ionicView.enter', function(e) {});
@@ -189,23 +191,9 @@ angular.module('starter.controllers', [])
     window.localStorage.userage = $scope.values.userage;
     window.localStorage.usermedicalcondition = $scope.values.usermedicalcondition;
     window.localStorage.userproductiveday = $scope.values.userproductiveday;
-
-    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
-    data.push([(new Date()).toISOString(), {
-      username: $scope.values.username,
-      usergender: $scope.values.usergender,
-      userage: $scope.values.userage,
-      usermedicalcondition: $scope.values.usermedicalcondition,
-      userproductiveday: $scope.values.userproductiveday
-    }]);
-
-    console.log(data)
-    window.localStorage.userdata = JSON.stringify(data);
-    $scope.saveButtonText = 'Saved';
-    setTimeout(function() {
-      $scope.saveButtonText = 'Save';
-      $scope.$apply();
-    }, 2000);
+    window.localStorage.userpainlocation = $scope.values.userpainlocation;
+    console.log($scope.values.userpainlocation)
+    window.setTimeout(function() {window.location="/#/tab/goals"},10000)
   };
 
 
