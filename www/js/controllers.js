@@ -1,51 +1,44 @@
 angular.module('starter.controllers', [])
 
-.controller('GoalsCtrl', function($scope) {  
-  $scope.values = {
-    pain: window.localStorage.pain || 5,
-    productivity: window.localStorage.productivity || 5,
-    mood: window.localStorage.mood || 5,
-  };
-  $scope.saveButtonText = 'Save';
-
-  $scope.$on('$ionicView.enter', function(e) {});
-
-  $scope.save = function() {
-    window.localStorage.pain = $scope.values.pain;
-    window.localStorage.productivity = $scope.values.productivity;
-    window.localStorage.mood = $scope.values.mood;
-
-    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
-    data.push([(new Date()).toISOString(), {
-      pain: parseInt($scope.values.pain),
-      productivity: parseInt($scope.values.productivity),
-      mood: parseInt($scope.values.mood),
-    }]);
-    window.localStorage.data = JSON.stringify(data);
-
-    $scope.saveButtonText = 'Saved';
-    setTimeout(function() {
-      $scope.saveButtonText = 'Save';
-      $scope.$apply();
-    }, 2000);
-  };
-
-})
+.controller('GoalsCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
   $scope.$on('$ionicView.enter', function(e) { $scope.initChart(); });
 
+  $scope.getData = function() {
+    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
+    return data;
+  };
+
+  $scope.buildSeries = function() {
+    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
+
+    var series = {};
+    series.mood = [];
+    series.pain = [];
+
+    for (var i = 0; i < data.length; i++)
+    {
+        series.mood.push([data[i].Date, parseInt(data[i].Mood)]);
+        series.pain.push([data[i].Date, parseInt(data[i].Pain)]);
+    }
+
+    return series;
+  }
+
   $scope.initChart = function () {
     $(function () {
         $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {
+
+            var series = $scope.buildSeries();
 
             $('#container').highcharts({
                 chart: {
                     zoomType: 'x'
                 },
                 title: {
-                    text: 'USD to EUR exchange rate over time'
+                    text: 'Pain Impact over Time'
                 },
                 subtitle: {
                     text: document.ontouchstart === undefined ?
@@ -56,7 +49,7 @@ angular.module('starter.controllers', [])
                 },
                 yAxis: {
                     title: {
-                        text: 'Exchange rate'
+                        text: 'Pain Impact'
                     }
                 },
                 legend: {
@@ -90,9 +83,14 @@ angular.module('starter.controllers', [])
                 },
 
                 series: [{
-                    type: 'area',
-                    name: 'USD to EUR',
-                    data: data
+                    type: 'line',
+                    name: 'Mood',
+                    data: series.mood
+                },
+                {
+                    type: 'line',
+                    name: 'Pain',
+                    data: series.pain
                 }]
             });
         });
@@ -101,16 +99,72 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {})
+
+.controller('QuestionsCtrl', function($scope) {
+  $scope.$on('$ionicView.enter', function(e) {
+    var vertRanges = document.getElementsByClassName("range-vertical");
+    for (var i = 0; i < vertRanges.length; ++i) {
+      var slider = vertRanges[i];
+      slider.style.width = slider.clientHeight + "px";
+      slider.style["margin-left"] = (-slider.clientHeight / 2) + "px";
+    }
+  });
+
+  $scope.values = {
+    pain: window.localStorage.pain || 5,
+    productivity: window.localStorage.productivity || 5,
+    activity: window.localStorage.activity || 5,
+    mood: window.localStorage.mood || 5,
+  };
+  $scope.saveButtonText = 'Save';
+
+  $scope.$on('$ionicView.enter', function(e) {});
+
+  $scope.save = function() {
+    window.localStorage.pain = $scope.values.pain;
+    window.localStorage.productivity = $scope.values.productivity;
+    window.localStorage.activity = $scope.values.activity;
+    window.localStorage.mood = $scope.values.mood;
+
+    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
+    data.push([(new Date()).toISOString(), {
+      pain: parseInt($scope.values.pain),
+      productivity: parseInt($scope.values.productivity),
+      activity: parseInt($scope.values.activity),
+      mood: parseInt($scope.values.mood),
+    }]);
+    window.localStorage.data = JSON.stringify(data);
+
+    $scope.saveButtonText = 'Saved';
+    setTimeout(function() {
+      $scope.saveButtonText = 'Save';
+      $scope.$apply();
+    }, 2000);
+  };
+
 })
+
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
-})
 
+
+  $scope.clearData = function() {
+    window.localStorage.clear();
+  };
+
+  $scope.loadData = function(filename) {
+    var path = '/data/' + filename + '.csv';
+    $.get(path, function(csv) {
+        var data = $.csv.toObjects(csv);
+        window.localStorage.data = JSON.stringify(data);
+    });
+  };
+
+})
 
 .controller('FirstTimeCtrl', function($scope) {  
   $scope.values = {
@@ -149,4 +203,4 @@ angular.module('starter.controllers', [])
   };
 
 
-})
+});

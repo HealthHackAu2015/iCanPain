@@ -1,29 +1,6 @@
 <ion-view view-title="Goals">
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">How is your pain?</div>
-      <div class="item item-body">
-        <input type="range" min="0" max="10" step="1" ng-model="values.pain" />
-        <output>{{values.pain}}</output>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">How productive are you?</div>
-      <div class="item item-body">
-        <input type="range" min="0" max="10" step="1" ng-model="values.productivity" />
-        <output>{{values.productivity}}</output>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">How is your mood?</div>
-      <div class="item item-body">
-        <input type="range" min="0" max="10" step="1" ng-model="values.mood" />
-        <output>{{values.mood}}</output>
-      </div>
-    </div>
-      <button class="button button-block button-positive" ng-click="save()">
-        {{saveButtonText}}
-      </button>
+    <a href="#/questions/pain" class="button button-block button-positive" ng-click="save()">Enter pain</a>
 
   </ion-content>
 </ion-view>
