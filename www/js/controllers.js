@@ -99,14 +99,16 @@ angular.module('starter.controllers', [])
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {})
 
 .controller('QuestionsCtrl', function($scope) {
-  $scope.$on('$ionicView.enter', function(e) {
-    var vertRanges = document.getElementsByClassName("range-vertical");
-    for (var i = 0; i < vertRanges.length; ++i) {
-      var slider = vertRanges[i];
-      slider.style.width = slider.clientHeight + "px";
-      slider.style["margin-left"] = (-slider.clientHeight / 2) + "px";
-    }
-  });
+	$scope.$on('$ionicView.enter', function (e) {
+		var vertRanges = document.getElementsByClassName("range-vertical");
+		for (var i = 0; i < vertRanges.length; ++i) {
+			var slider = vertRanges[i];
+			slider.style.width = slider.parentElement.clientHeight + "px";
+			slider.style.height = slider.parentElement.clientHeight + "px";
+			slider.style["margin-left"] = (-slider.parentElement.clientHeight / 2) + "px";
+			//slider.style["margin-top"] = (slider.parentElement.clientHeight / 2 - 60) + "px";
+		}
+	});
 
   $scope.values = {
     pain: window.localStorage.pain || 5,
