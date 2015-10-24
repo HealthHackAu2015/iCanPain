@@ -90,6 +90,7 @@ angular.module('starter.controllers', [])
   $scope.values = {
     pain: window.localStorage.pain || 5,
     productivity: window.localStorage.productivity || 5,
+    activity: window.localStorage.activity || 5,
     mood: window.localStorage.mood || 5,
   };
   $scope.saveButtonText = 'Save';
@@ -99,12 +100,14 @@ angular.module('starter.controllers', [])
   $scope.save = function() {
     window.localStorage.pain = $scope.values.pain;
     window.localStorage.productivity = $scope.values.productivity;
+    window.localStorage.activity = $scope.values.activity;
     window.localStorage.mood = $scope.values.mood;
 
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
     data.push([(new Date()).toISOString(), {
       pain: parseInt($scope.values.pain),
       productivity: parseInt($scope.values.productivity),
+      activity: parseInt($scope.values.activity),
       mood: parseInt($scope.values.mood),
     }]);
     window.localStorage.data = JSON.stringify(data);
