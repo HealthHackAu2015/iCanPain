@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('GoalsCtrl', function($scope) {  
+.controller('GoalsCtrl', function($scope) {
   $scope.values = {
     pain: window.localStorage.pain || 5,
     productivity: window.localStorage.productivity || 5,
@@ -103,6 +103,12 @@ angular.module('starter.controllers', [])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
+})
+
+.controller('QuestionsCtrl', function($scope) {
+  $scope.save = function() {
+    // alert('saved');
+  };
 })
 
 .controller('AccountCtrl', function($scope) {

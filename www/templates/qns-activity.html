@@ -1,0 +1,15 @@
+<ion-view view-title="Goals">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">How is your activity?</div>
+      <div class="item item-body">
+        <input type="range" min="0" max="10" step="1" ng-model="values.pain" />
+        <output>{{values.pain}}</output>
+      </div>
+    </div>
+    <div class="button-bar">
+      <a href="#/questions/pain" class="button icon-left ion-chevron-left button-clear button-positive">Back</a>
+      <a href="#/questions/productivity" class="button icon-right ion-chevron-right button-positive">Next</a>
+    </div>
+  </ion-content>
+</ion-view>
