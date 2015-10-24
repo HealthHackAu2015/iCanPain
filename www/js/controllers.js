@@ -130,6 +130,11 @@ angular.module('starter.controllers', [])
 
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
     var d = new Date();
+    if (data.length > 0) {
+      var dateSplit = data[data.length - 1].Date.split('/');
+      d = new Date(dateSplit[2], dateSplit[1] - 1, dateSplit[0]);
+      d.setDate(d.getDate() + 1);
+    }
     data.push({
       uid: 1,
       Date: d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear(),
@@ -185,32 +190,32 @@ angular.module('starter.controllers', [])
 
 
 .controller('InfoCtrl', function($scope) {
-   var chats = [{
-   id: 0,
-   name: 'IMB - CENTRE FOR PAIN RESEARCH',
-   lastText: "Centre Objectives: Recognise" ,
-   face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
- }, {
-   id: 1,
-   name: 'Chronic Pain Australia',
-   lastText: "If you live with pain we can help you",
-   face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
- }, {
-   id: 2,
-   name: 'Pain Australia',
-   lastText: "Chronic Pain – Australia's Hidden Health Problem",
-   face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
- }, {
-   id: 3,
-   name: 'Chronic Pain Support Group',
-   lastText: "We're all in this together",
-   face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
- }, {
-   id: 4,
-   name: 'Chronic Pain Meetups in Brisbane',
-   lastText: "Get up and get going again with encouragement and support from others living with pain too.",
-   face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
- }];
+  var chats = [{
+    id: 0,
+    name: 'IMB - CENTRE FOR PAIN RESEARCH',
+    lastText: "Centre Objectives: Recognise",
+    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
+  }, {
+    id: 1,
+    name: 'Chronic Pain Australia',
+    lastText: "If you live with pain we can help you",
+    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
+  }, {
+    id: 2,
+    name: 'Pain Australia',
+    lastText: "Chronic Pain – Australia's Hidden Health Problem",
+    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
+  }, {
+    id: 3,
+    name: 'Chronic Pain Support Group',
+    lastText: "We're all in this together",
+    face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
+  }, {
+    id: 4,
+    name: 'Chronic Pain Meetups in Brisbane',
+    lastText: "Get up and get going again with encouragement and support from others living with pain too.",
+    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
+  }];
 })
 
 
