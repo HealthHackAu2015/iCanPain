@@ -14,8 +14,8 @@ angular.module('starter.controllers', [])
   // parse a date in dd/mm/yyyy format
   $scope.parseDate = function(input) {
     var parts = input.split('/');
-    return Date.UTC(parts[2],parts[1]-1,parts[0])
-    }
+    return Date.UTC(parts[2],parts[1]-1,parts[0]);
+  };
 
   $scope.buildSeries = function() {
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
@@ -27,12 +27,12 @@ angular.module('starter.controllers', [])
     for (var i = 0; i < data.length; i++)
     {
         var date = $scope.parseDate(data[i].Date);
-        series.mood.push([date, parseInt(data[i].Mood)]);
-        series.pain.push([date, parseInt(data[i].Pain)]);
+        series.mood.push([date, parseInt(data[i]['Pain slider score'])]);
+        series.pain.push([date, parseInt(data[i]['Mood slider score'])]);
     }
 
     return series;
-  }
+  };
 
   $scope.initChart = function () {
     $(function () {
@@ -134,12 +134,27 @@ angular.module('starter.controllers', [])
     window.localStorage.mood = $scope.values.mood;
 
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
-    data.push([(new Date()).toISOString(), {
+    var d = new Date();
+    data.push({
+      uid:1,
+      Date: d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear(),
       pain: parseInt($scope.values.pain),
-      productivity: parseInt($scope.values.productivity),
       activity: parseInt($scope.values.activity),
+      productivity: parseInt($scope.values.productivity),
       mood: parseInt($scope.values.mood),
-    }]);
+
+      'user': '',
+      'Pain slider score': parseInt($scope.values.pain),
+      'Physical Activity slider score': parseInt($scope.values.activity),
+      'Productivity slider score': parseInt($scope.values.productivity),
+      'Mood slider score': parseInt($scope.values.mood),
+      'Pain Type': '',
+      'Pain Location': '',
+      'Pain Notes Tell me more': '',
+      'Physical Activity Tell me more': '',
+      'Productivity Notes Tell me more': '',
+      'Mood Notes Tell me more': '',
+    });
     window.localStorage.data = JSON.stringify(data);
 
     $scope.saveButtonText = 'Saved';
@@ -172,7 +187,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('FirstTimeCtrl', function($scope) {  
+.controller('FirstTimeCtrl', function($scope) {
   $scope.values = {
     username: window.localStorage.username || "",
     usergender: window.localStorage.usergender || "",
@@ -190,17 +205,6 @@ angular.module('starter.controllers', [])
     window.localStorage.usermedicalcondition = $scope.values.usermedicalcondition;
     window.localStorage.userproductiveday = $scope.values.userproductiveday;
 
-    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
-    data.push([(new Date()).toISOString(), {
-      username: $scope.values.username,
-      usergender: $scope.values.usergender,
-      userage: $scope.values.userage,
-      usermedicalcondition: $scope.values.usermedicalcondition,
-      userproductiveday: $scope.values.userproductiveday
-    }]);
-
-    console.log(data)
-    window.localStorage.userdata = JSON.stringify(data);
     $scope.saveButtonText = 'Saved';
     setTimeout(function() {
       $scope.saveButtonText = 'Save';
