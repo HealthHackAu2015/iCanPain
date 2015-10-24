@@ -11,3 +11,26 @@
   display: flex;
   flex-direction: column;
 }
+
+.flex-calendar .month {
+  background-color: #ef473a
+}
+
+.flex-calendar .week {
+  background-color: #F26C61;
+}
+
+#card-red {
+    text-align: center;
+    background-color: #ef473a
+}
+
+#card-blue {
+    text-align: center;
+    background-color: #387ef5
+}
+
+#card-yellow {
+    text-align: center;
+    background-color: #ffc900
+}
