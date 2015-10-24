@@ -4,3 +4,8 @@
 node_modules/
 platforms/
 plugins/
+/bin/Android/Debug
+/bin/Android/Release
+*.user
+/.vs/iCanPain/v14/.suo
+/.vs/config
