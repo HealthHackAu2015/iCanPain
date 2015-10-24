@@ -1,19 +1,21 @@
 <ion-view view-title="Goals">
-  <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">How is your productivity?</div>
-      <div class="item item-body">
-				<div style=" overflow:hidden inherit;">
-					<div class="item range range-positive range-vertical" style="border: none; height:200px;">
-						<input type="range" min="0" max="10" step="1" ng-model="values.productivity" />
+	<ion-content class="padding" scroll="false">
+		<div class="fill-height-or-more">
+			<div class="fill-height-or-more list card" style="flex:300">
+				<div class="item item-divider">How is your productivity?</div>
+				<div class="fill-height-or-more item item-body" style="flex:1; margin-left:50%; overflow-x:hidden;">
+					<div style="flex:1;">
+						<div class="item range range-positive range-vertical" style="border: none;">
+							<input type="range" min="0" max="10" step="1" ng-model="values.productivity" />
+						</div>
 					</div>
+					<output>{{values.productivity}}</output>
 				</div>
-        <output>{{values.productivity}}</output>
-      </div>
-    </div>
-    <div class="button-bar">
-      <a href="#/questions/activity" class="button icon-left ion-chevron-left button-clear button-positive">Back</a>
-      <a href="#/questions/mood" class="button icon-right ion-chevron-right button-positive">Next</a>
-    </div>
-  </ion-content>
+			</div>
+			<div class="button-bar">
+				<a href="#/questions/activity" class="button icon-left ion-chevron-left button-clear button-positive">Back</a>
+				<a href="#/questions/mood" class="button icon-right ion-chevron-right button-positive">Next</a>
+			</div>
+		</div>
+	</ion-content>
 </ion-view>
