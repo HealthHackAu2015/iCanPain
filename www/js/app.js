@@ -31,7 +31,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-    .state('questions', {
+  .state('first-time', {
+    url: '/first-time',
+    templateUrl: 'templates/first-time.html',
+    controller: 'FirstTimeCtrl'
+  })
+  .state('questions', {
     url: '/questions',
     abstract: true,
     templateUrl: 'templates/questions.html'
@@ -92,16 +97,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('tab.first-time', {
-    url: '/first-time',
-    views: {
-      'tab-first-time': {
-        templateUrl: 'templates/tab-first-time.html',
-        controller: 'FirstTimeCtrl'
-      }
-    }
-  })
-
   .state('tab.chats', {
       url: '/chats',
       views: {
@@ -132,6 +127,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/first-time');
+  $urlRouterProvider.otherwise('/first-time');
 
 });
