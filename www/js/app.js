@@ -92,7 +92,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('charts', {
     url: '/history/charts',
-    templateUrl: 'templates/history-charts.html'
+    templateUrl: 'templates/history-charts.html',
+    controller: 'ChatsCtrl'
   })
 
   .state('doctor', {
