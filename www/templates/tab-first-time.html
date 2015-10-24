@@ -1,0 +1,54 @@
+<ion-view view-title="Set up your details">
+  <ion-content class="padding">
+  <h3>Name</h3>
+  <div class="list list-inset">
+    <label class="item item-input">
+     <input type="text" placeholder="First Name" ng-model="values.username" required>
+     </input>
+    </label>
+   </label>
+ </div>
+
+<div class="list">
+  <h3>Gender</h3>
+  <label class="item item-radio">
+    <ion-radio ng-model="values.usergender" ng-value="'Male'">Male</ion-radio>
+    <i class="radio-icon ion-checkmark"></i>
+    <ion-radio ng-model="values.usergender" ng-value="'Female'">Female </ion-radio>
+    <i class="radio-icon ion-checkmark"></i>
+  </label>
+</div>
+
+<h3>Age</h3>
+  <div class="list list-inset">
+    <label class="item item-input">
+     <input type="text" placeholder="Age" ng-model="values.userage">
+    </label>
+   </label>
+ </div>
+
+ <h3>Medical Condition</h3>
+ <h5>Please list any medical issues that are causing you pain.</h5>
+  <div class="list list-inset">
+    <label class="item item-input" >
+     <input type="text" placeholder="Medical Condition" ng-model="values.usermedicalcondition">
+    </label>
+   </label>
+ </div>
+
+ <h3>Productivity</h3>
+ <h5>Tell us about your most productive day with your medical condition</h5>
+  <div class="list list-inset">
+    <label class="item item-input">
+     <input type="text" placeholder="50 characters or less" maxlength = 50 ng-model="values.userproductiveday">
+    </label>
+   </label>
+ </div>
+ 
+ <div align="right">
+ <button class="button button-calm" right-margin = "100px" ng-click="save()">
+    Continue
+ </button>
+</div>
+  </ion-content>
+</ion-view>

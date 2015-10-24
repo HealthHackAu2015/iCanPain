@@ -50,6 +50,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.first-time', {
+    url: '/first-time',
+    views: {
+      'tab-first-time': {
+        templateUrl: 'templates/tab-first-time.html',
+        controller: 'FirstTimeCtrl'
+      }
+    }
+  })
+
   .state('tab.chats', {
       url: '/chats',
       views: {
@@ -80,6 +90,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/goals');
+  $urlRouterProvider.otherwise('/tab/first-time');
 
 });

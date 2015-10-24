@@ -109,4 +109,44 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
-});
+})
+
+
+.controller('FirstTimeCtrl', function($scope) {  
+  $scope.values = {
+    username: window.localStorage.username || "",
+    usergender: window.localStorage.usergender || "",
+    userage: window.localStorage.userage || "",
+    usermedicalcondition: window.localStorage.usermedicalcondition || "",
+    userproductiveday: window.localStorage.userproductiveday || "",
+  };
+
+  $scope.$on('$ionicView.enter', function(e) {});
+
+  $scope.save = function() {
+    window.localStorage.username = $scope.values.username;
+    window.localStorage.usergender = $scope.values.usergender;
+    window.localStorage.userage = $scope.values.userage;
+    window.localStorage.usermedicalcondition = $scope.values.usermedicalcondition;
+    window.localStorage.userproductiveday = $scope.values.userproductiveday;
+
+    var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
+    data.push([(new Date()).toISOString(), {
+      username: $scope.values.username,
+      usergender: $scope.values.usergender,
+      userage: $scope.values.userage,
+      usermedicalcondition: $scope.values.usermedicalcondition,
+      userproductiveday: $scope.values.userproductiveday
+    }]);
+
+    console.log(data)
+    window.localStorage.userdata = JSON.stringify(data);
+    $scope.saveButtonText = 'Saved';
+    setTimeout(function() {
+      $scope.saveButtonText = 'Save';
+      $scope.$apply();
+    }, 2000);
+  };
+
+
+})
