@@ -174,7 +174,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.loadData = function(filename) {
-    var path = '/data/' + filename + '.csv';
+    var path = 'data/' + filename + '.csv';
     $.get(path, function(csv) {
       var data = $.csv.toObjects(csv);
       window.localStorage.data = JSON.stringify(data);
