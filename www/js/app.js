@@ -31,8 +31,50 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+    .state('questions', {
+    url: '/questions',
+    abstract: true,
+    templateUrl: 'templates/questions.html'
+  })
+  .state('questions.pain', {
+    url: '/pain',
+    views: {
+      'questions-pain': {
+        templateUrl: 'templates/qns-pain.html',
+        controller: 'QuestionsCtrl'
+      }
+    }
+  })
+  .state('questions.activity', {
+    url: '/activity',
+    views: {
+      'questions-activity': {
+        templateUrl: 'templates/qns-activity.html',
+        controller: 'QuestionsCtrl'
+      }
+    }
+  })
+  .state('questions.productivity', {
+    url: '/productivity',
+    views: {
+      'questions-productivity': {
+        templateUrl: 'templates/qns-productivity.html',
+        controller: 'QuestionsCtrl'
+      }
+    }
+  })
+  .state('questions.mood', {
+    url: '/mood',
+    views: {
+      'questions-mood': {
+        templateUrl: 'templates/qns-mood.html',
+        controller: 'QuestionsCtrl'
+      }
+    }
+  })
+
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
