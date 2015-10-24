@@ -169,7 +169,43 @@ angular.module('starter.controllers', [])
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
-    enableFriends: true
+    enableFriends: true,
+    enableNotifications: localStorage.enableNotifications ? JSON.parse(localStorage.enableNotifications) : false
+  };
+
+  $scope.toggleNotifications = function() {
+    localStorage.enableNotifications = JSON.stringify($scope.settings.enableNotifications);
+
+    var scheduleNotification = function() {
+      var sound = device.platform == 'Android' ? 'file://sound.mp3' : 'file://beep.caf';
+      var date = new Date(Date.now() + 3 * 1000);
+
+      cordova.plugins.notification.local.schedule({
+        id: 1,
+        title: 'Dont forget to take your meds',
+        message: 'And dont tell us how you feel',
+        at: date,
+        sound: sound,
+        icon: 'resources/icon.png'
+      });
+    };
+
+    if (typeof cordova !== 'undefined' && $scope.settings.enableNotifications) {
+      cordova.plugins.notification.local.hasPermission(function(granted) {
+        if (!granted) {
+          cordova.plugins.notification.local.registerPermission(function(granted) {
+            if (!granted) {
+              $scope.settings.enableNotifications = false;
+              return $scope.toggleNotifications();
+            }
+
+            scheduleNotification();
+          });
+        } else {
+          scheduleNotification();
+        }
+      });
+    }
   };
 
 
