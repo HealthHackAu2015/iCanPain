@@ -192,8 +192,6 @@ angular.module('starter.controllers', [])
     window.localStorage.usermedicalcondition = $scope.values.usermedicalcondition;
     window.localStorage.userproductiveday = $scope.values.userproductiveday;
     window.localStorage.userpainlocation = $scope.values.userpainlocation;
-    console.log($scope.values.userpainlocation);
-    window.setTimeout(function() {window.location="/#/tab/goals"},10000);
   };
 
 //   app.controller('myController', function($scope) {
