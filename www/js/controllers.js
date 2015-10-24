@@ -4,20 +4,20 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
-  $scope.$on('$ionicView.enter', function(e) { initChart(); });
+  $scope.$on('$ionicView.enter', function(e) { $scope.initChart(); });
 
-  var getData = function() {
+  $scope.getData = function() {
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
     return data;
   };
 
   // parse a date in dd/mm/yyyy format
-  var parseDate = function(input) {
+  $scope.parseDate = function(input) {
     var parts = input.split('/');
-    return Date.UTC(parts[2],parts[1]-1,parts[0]);
-  };
+    return Date.UTC(parts[2],parts[1]-1,parts[0])
+    }
 
-  var buildSeries = function() {
+  $scope.buildSeries = function() {
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
 
     var series = {};
@@ -26,17 +26,17 @@ angular.module('starter.controllers', [])
 
     for (var i = 0; i < data.length; i++)
     {
-        var date = parseDate(data[i].Date);
-        series.mood.push([date, parseInt(data[i]['Pain slider score'])]);
-        series.pain.push([date, parseInt(data[i]['Mood slider score'])]);
+        var date = $scope.parseDate(data[i].Date);
+        series.mood.push([date, parseInt(data[i].Mood)]);
+        series.pain.push([date, parseInt(data[i].Pain)]);
     }
 
     return series;
-  };
+  }
 
-  var initChart = function () {
+  $scope.initChart = function () {
     $(function () {
-        var series = buildSeries();
+        var series = $scope.buildSeries();
 
         $('#container').highcharts({
             chart: {
@@ -99,7 +99,7 @@ angular.module('starter.controllers', [])
             }]
         });
     });
-};
+}
 
 })
 
@@ -134,27 +134,12 @@ angular.module('starter.controllers', [])
     window.localStorage.mood = $scope.values.mood;
 
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
-    var d = new Date();
-    data.push({
-      uid:1,
-      Date: d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear(),
+    data.push([(new Date()).toISOString(), {
       pain: parseInt($scope.values.pain),
-      activity: parseInt($scope.values.activity),
       productivity: parseInt($scope.values.productivity),
+      activity: parseInt($scope.values.activity),
       mood: parseInt($scope.values.mood),
-
-      'user': '',
-      'Pain slider score': parseInt($scope.values.pain),
-      'Physical Activity slider score': parseInt($scope.values.activity),
-      'Productivity slider score': parseInt($scope.values.productivity),
-      'Mood slider score': parseInt($scope.values.mood),
-      'Pain Type': '',
-      'Pain Location': '',
-      'Pain Notes Tell me more': '',
-      'Physical Activity Tell me more': '',
-      'Productivity Notes Tell me more': '',
-      'Mood Notes Tell me more': '',
-    });
+    }]);
     window.localStorage.data = JSON.stringify(data);
 
     $scope.saveButtonText = 'Saved';
@@ -175,6 +160,7 @@ angular.module('starter.controllers', [])
 
   $scope.clearData = function() {
     window.localStorage.clear();
+    window.location = "/#/first-time"
   };
 
   $scope.loadData = function(filename) {
@@ -194,6 +180,7 @@ angular.module('starter.controllers', [])
     userage: window.localStorage.userage || "",
     usermedicalcondition: window.localStorage.usermedicalcondition || "",
     userproductiveday: window.localStorage.userproductiveday || "",
+    userpainlocation: window.localStorage.userpainlocation || "",
   };
 
   $scope.$on('$ionicView.enter', function(e) {});
@@ -204,12 +191,9 @@ angular.module('starter.controllers', [])
     window.localStorage.userage = $scope.values.userage;
     window.localStorage.usermedicalcondition = $scope.values.usermedicalcondition;
     window.localStorage.userproductiveday = $scope.values.userproductiveday;
-
-    $scope.saveButtonText = 'Saved';
-    setTimeout(function() {
-      $scope.saveButtonText = 'Save';
-      $scope.$apply();
-    }, 2000);
+    window.localStorage.userpainlocation = $scope.values.userpainlocation;
+    console.log($scope.values.userpainlocation);
+    window.setTimeout(function() {window.location="/#/tab/goals"},10000);
   };
 
 //   app.controller('myController', function($scope) {

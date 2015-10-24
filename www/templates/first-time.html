@@ -22,19 +22,67 @@
 <h3>Age</h3>
   <div class="list list-inset">
     <label class="item item-input">
-     <input type="text" placeholder="Age" ng-model="values.userage">
-    </label>
+     <input type="number" placeholder="Age" ng-model="values.userage" >
+    </input>
    </label>
  </div>
 
  <h3>Medical Condition</h3>
- <h5>Please list any medical issues that are causing you pain.</h5>
+ <h5>Please list any diagnosed medical issues that are causing you pain.</h5>
   <div class="list list-inset">
     <label class="item item-input" >
-     <input type="text" placeholder="Medical Condition" ng-model="values.usermedicalcondition">
+     <input type="text" placeholder="None" ng-model="values.usermedicalcondition">
     </label>
    </label>
  </div>
+
+ <h3>Pain Profile</h3>
+ <h5>Please tell us where you regularly feel pain</h5>
+ <ul class="list" ng-model = "values.userpainlocation">
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     Head
+  </li>
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     Upper Body
+  </li>
+      <li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     Lower Body
+  </li>
+    <li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     Arms
+  </li>
+    <li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     Hands
+  </li>
+    <li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     Legs
+  </li>
+    <li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     Feet
+  </li>
+</ul>
+
 
  <h3>Productivity</h3>
  <h5>Tell us about your most productive day with your medical condition</h5>
@@ -46,9 +94,9 @@
  </div>
 
  <div align="right">
- <a href="#/questions/pain" class="button button-calm" right-margin = "100px" ng-click="save()">
+ <button class="button button-calm" right-margin = "100px" ng-click="save()">
     Continue
- </a>
+ </button>
 </div>
   </ion-content>
 </ion-view>
