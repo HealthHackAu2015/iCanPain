@@ -1,18 +1,20 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
-    <ion-toggle ng-model="settings.enableFriends">
+      <ion-toggle ng-model="settings.enableFriends">
         Win Health Hack
-    </ion-toggle>
-    <ion-toggle ng-model="settings.enableNotifications" ng-click="toggleNotifications()">
+      </ion-toggle>
+      <ion-toggle ng-model="settings.enableNotifications" ng-click="toggleNotifications()">
         Enable Push Notifications
-    </ion-toggle>
-	<button class="button button-positive" ng-click="loadData('Shelly')">
-	  Load Shelly's Data
-	</button>
-	<button class="button button-stable" ng-click="clearData()">
-	  Clear Data
-	</button>
+      </ion-toggle>
+      <div class="button-bar">
+        <button class="button button-positive" ng-click="loadData('Shelly')">
+          Load Shelly's Data
+        </button>
+        <button class="button button-stable" ng-click="clearData()">
+          Clear Data
+        </button>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>
