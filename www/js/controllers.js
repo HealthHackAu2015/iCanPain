@@ -6,7 +6,13 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function ($scope, $stateParams, EncouragmentPopups) {
+
+  $scope.$on('$ionicView.enter', function (e) {
+    if ($stateParams.from && $stateParams.from.toLowerCase() == "questionaire") {
+      EncouragmentPopups.showEncouragement($scope);
+    }
+  });
 
    $scope.$on('$ionicView.enter', function(e) {
      initChart();
