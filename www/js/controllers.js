@@ -368,9 +368,9 @@ angular.module('starter.controllers', [])
   });
 
   $scope.addDetails = function (detailsVarName, nextButtonId) {
-    $scope[detailsVarName] = $scope[detailsVarName] || '';
+    $scope.values[detailsVarName] = $scope.values[detailsVarName] || '';
     var myPopup = $ionicPopup.show({
-      template: '<textarea style="border: 1px silver solid;" rows="6" id="inputText">' + $scope[detailsVarName] + '</textarea>',
+      template: '<textarea style="border: 1px silver solid;" rows="6" id="inputText">' + $scope.values[detailsVarName] + '</textarea>',
       title: 'What happened?',
       //subTitle: 'Please use normal things',
       scope: $scope,
@@ -388,7 +388,7 @@ angular.module('starter.controllers', [])
               alert('Please enter more details for what is wrong' + inputText.value);
               e.preventDefault();
             } else {
-              $scope[detailsVarName] = inputText.value;
+              $scope.values[detailsVarName] = inputText.value;
               var toClick = document.getElementById(nextButtonId);
               console.log(toClick);
               if (toClick)
@@ -414,11 +414,23 @@ angular.module('starter.controllers', [])
     //});
   };
 
+  $scope.tryForceTellMeMore = function ($event, currentSetting, detailsVarName, nextButtonId) {
+    if (currentSetting >= 8 && !$scope.values[detailsVarName])
+    {
+      $scope.addDetails(detailsVarName, nextButtonId);
+      $event.preventDefault();
+    }
+  };
+
   $scope.values = {
     pain: window.localStorage.pain || 5,
     productivity: window.localStorage.productivity || 5,
     activity: window.localStorage.activity || 5,
     mood: window.localStorage.mood || 5,
+    painDetails: '',
+    activityDetails: '',
+    productivityDetails: '',
+    moodDetails: '',
   };
   $scope.saveButtonText = 'Save';
 
@@ -429,6 +441,8 @@ angular.module('starter.controllers', [])
     window.localStorage.productivity = $scope.values.productivity;
     window.localStorage.activity = $scope.values.activity;
     window.localStorage.mood = $scope.values.mood;
+
+
 
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
     var d = new Date();
@@ -452,10 +466,10 @@ angular.module('starter.controllers', [])
       'Mood slider score': parseInt($scope.values.mood),
       'Pain Type': '',
       'Pain Location': '',
-      'Pain Notes Tell me more': '',
-      'Physical Activity Tell me more': '',
-      'Productivity Notes Tell me more': '',
-      'Mood Notes Tell me more': '',
+      'Pain Notes Tell me more': $scope.values.painDetails,
+      'Physical Activity Tell me more': $scope.values.activityDetails,
+      'Productivity Notes Tell me more': $scope.values.productivityDetails,
+      'Mood Notes Tell me more': $scope.values.moodDetails,
     });
     window.localStorage.data = JSON.stringify(data);
 
@@ -464,6 +478,12 @@ angular.module('starter.controllers', [])
       $scope.saveButtonText = 'Save';
       $scope.$apply();
     }, 2000);
+
+    $scope.values.painDetails = '';
+    $scope.values.activityDetails = '';
+    $scope.values.productivityDetails = '';
+    $scope.values.moodDetails = '';
+
     EncouragmentPopups.showEncouragement($scope);
   };
 
