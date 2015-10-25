@@ -1,21 +1,24 @@
 <ion-view view-title="Pain">
-  <ion-content class="padding" scroll="false">
+	<ion-content class="padding" scroll="false">
 		<div class="fill-height-or-more">
 			<div class="fill-height-or-more list card" style="flex:300; text-align:center;">
-        <h4 class="title">In the last 24 hours,<br> how bad was your pain?</h4>
+				<h4 class="title">In the last 24 hours,<br> how bad was your pain?</h4>
 				<div class="fill-height-or-more item item-body" style="flex:1; overflow-x:hidden;">
-						<div style="padding-left:50%; flex:1;">
-							<div class="item range range-positive range-vertical" style="border: none;">
-								<input type="range" min="0" max="10" step="1" ng-model="values.pain" />
-							</div>
+					<output style="font-size:24pt; height: 24pt;">{{values.pain}}</output>
+					<div style="padding-left:50%; flex:1;">
+						<div class="item range range-positive range-vertical" style="border: none;">
+							<input type="range" min="0" max="10" step="1" ng-model="values.pain" />
 						</div>
-						<output>{{values.pain}}</output>
+					</div>
+					<div>
+						<a class="button button-positive" style="float:right; float: right; font-size: small;" ng-click="addDetails('painDetails', 'painNextButton')">Can you tell me more?</a>
+					</div>
 				</div>
 			</div>
 			<div class="button-bar">
 				<a href="#/tab/chats/questionaire" class="button icon-left ion-chevron-left button-clear button-positive">Cancel</a>
-				<a href="#/questions/activity" class="button icon-right ion-chevron-right button-positive">Next</a>
+				<a href="#/questions/activity" class="button icon-right ion-chevron-right button-positive" id="painNextButton">Next</a>
 			</div>
 		</div>
-  </ion-content>
+	</ion-content>
 </ion-view>

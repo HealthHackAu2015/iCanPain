@@ -3,7 +3,7 @@
     return Date.UTC(parts[2], parts[1] - 1, parts[0]);
   };
 
- var buildSeries = function() {
+  var buildSeries = function() {
     var data = window.localStorage.data ? JSON.parse(window.localStorage.data) : [];
 
     var series = {};
@@ -122,7 +122,7 @@ angular.module('starter.controllers', [])
      initChart();
    });
 
-   var initChart = function() {
+  var initChart = function() {
     $(function() {
       var series = buildSeries();
       activedata = series.weeklypain;
@@ -136,10 +136,6 @@ angular.module('starter.controllers', [])
           text: 'Your Weekly History'
         },
         colors: ['#F4AC1C'],
-        subtitle: {
-          text: document.ontouchstart === undefined ?
-            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-        },
         xAxis: {
           categories: series.xAxis
         },
@@ -264,6 +260,8 @@ angular.module('starter.controllers', [])
         lastmonthextreme = lastmonthextreme + series.weeklyextremepain[i][1]/4;
       }
 
+  }
+      
       console.log([thismonthpain, thismonthactivity,thismonthproductivity,thismonthmood,thismonthextreme])
       console.log([lastmonthpain, lastmonthactivity,lastmonthproductivity,lastmonthmood,lastmonthextreme])
 
@@ -359,7 +357,7 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('QuestionsCtrl', function($scope, EncouragmentPopups) {
+.controller('QuestionsCtrl', function ($scope, $ionicPopup, EncouragmentPopups) {
   $scope.$on('$ionicView.enter', function(e) {
     var vertRanges = document.getElementsByClassName("range-vertical");
     for (var i = 0; i < vertRanges.length; ++i) {
@@ -370,6 +368,53 @@ angular.module('starter.controllers', [])
       //slider.style["margin-top"] = (slider.parentElement.clientHeight / 2 - 60) + "px";
     }
   });
+
+  $scope.addDetails = function (detailsVarName, nextButtonId) {
+    $scope[detailsVarName] = $scope[detailsVarName] || '';
+    var myPopup = $ionicPopup.show({
+      template: '<textarea style="border: 1px silver solid;" rows="6" id="inputText">' + $scope[detailsVarName] + '</textarea>',
+      title: 'What happened?',
+      //subTitle: 'Please use normal things',
+      scope: $scope,
+      buttons: [
+        {
+          text: '<b>Cancel</b>',
+          type: 'button-negative'
+        },
+        {
+          text: '<b>Save</b>',
+          type: 'button-balanced',
+          onTap: function (e) {
+            if (!inputText.value) {
+              //don't allow the user to close unless he enters wifi password
+              alert('Please enter more details for what is wrong' + inputText.value);
+              e.preventDefault();
+            } else {
+              $scope[detailsVarName] = inputText.value;
+              var toClick = document.getElementById(nextButtonId);
+              console.log(toClick);
+              if (toClick)
+              {
+                if (toClick.onclick)
+                  toClick.onclick();
+                if (toClick.href)
+                  window.location.hash = '#' + toClick.href.split('#', 2)[1];
+                //document.createEvent("MouseEvents");
+                //event.initMouseEvent("click", true, true, window,
+                //    0, 0, 0, 0, 0,
+                //    false, false, false, false,
+                //    0, null);
+                //toClick.dispatchEvent(event);
+              }
+            }
+          }
+        }
+      ]
+    });
+    //myPopup.then(function (res) {
+    //  console.log('Tapped!', res);
+    //});
+  };
 
   $scope.values = {
     pain: window.localStorage.pain || 5,

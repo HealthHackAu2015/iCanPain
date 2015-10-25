@@ -9,3 +9,5 @@ plugins/
 *.user
 /.vs/iCanPain/v14/.suo
 /.vs/config
+/bld/Android/Release/changeList.json
+/bld/Android/Debug/changeList.json
