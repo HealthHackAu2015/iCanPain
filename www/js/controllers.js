@@ -610,7 +610,7 @@ angular.module('starter.controllers', [])
     usergender: window.localStorage.usergender || "",
     userage: parseInt(window.localStorage.userage) || 30,
     usermedicalcondition: window.localStorage.usermedicalcondition || "",
-    userproductiveday: window.localStorage.userproductiveday || "",
+    usermedications: window.localStorage.usermedications || "",
     userpainlocation: window.localStorage.userpainlocation || "",
   };
 
@@ -621,7 +621,7 @@ angular.module('starter.controllers', [])
     window.localStorage.usergender = $scope.values.usergender;
     window.localStorage.userage = $scope.values.userage;
     window.localStorage.usermedicalcondition = $scope.values.usermedicalcondition;
-    window.localStorage.userproductiveday = $scope.values.userproductiveday;
+    window.localStorage.usermedications = $scope.values.userproductiveday;
     window.localStorage.userpainlocation = $scope.values.userpainlocation;
   };
 
