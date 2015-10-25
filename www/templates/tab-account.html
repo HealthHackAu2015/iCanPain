@@ -1,9 +1,9 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
-      <ion-toggle ng-model="settings.winHealthHack" ng-click="winHealthHackChanged()">
+      <!-- <ion-toggle ng-model="settings.winHealthHack" ng-click="winHealthHackChanged()">
         Win Health Hack
-    </ion-toggle>
+      </ion-toggle> -->
       <ion-toggle ng-model="settings.enableNotifications" ng-click="toggleNotifications()">
         Enable Medication Reminder
       </ion-toggle>
@@ -16,10 +16,17 @@
         <input type="number" ng-model="settings.notificationFrequency" ng-blur="notificationTimeChanged()">
       </label>
       <div class="button-bar">
+        <button class="button icon-right ion-chevron-right button-light" ng-click="loadData('Shelly')">
+          Edit Your Details
+        </button>
+      </div>
+      <div class="button-bar">
         <button class="button button-positive" ng-click="loadData('Shelly')">
           Load Shelly's Data
         </button>
-        <button class="button button-stable" ng-click="clearData()">
+      </div>
+      <div class="button-bar">
+        <button class="button button-assertive" ng-click="clearData()">
           Clear Data
         </button>
       </div>
