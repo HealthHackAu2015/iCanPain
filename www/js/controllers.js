@@ -1,6 +1,10 @@
 angular.module('starter.controllers', [])
 
-.controller('GoalsCtrl', function($scope) {})
+.controller('GoalsCtrl', function($scope) {
+  $scope.$on('$ionicView.enter', function(e) {
+    window.location = '#/questions/pain';
+  });
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
@@ -267,25 +271,64 @@ angular.module('starter.controllers', [])
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
-    enableFriends: true,
-    enableNotifications: localStorage.enableNotifications ? JSON.parse(localStorage.enableNotifications) : false
+    winHealthHack: true,
+    enableNotifications: localStorage.enableNotifications ? JSON.parse(localStorage.enableNotifications) : false,
+    notificationTime: localStorage.notificationTime ? new Date(localStorage.notificationTime) : (new Date(Math.round(Date.now() / (60 * 60 * 1000)) * 60 * 60 * 1000)),
+    notificationFrequency: localStorage.notificationFrequency ? JSON.parse(localStorage.notificationFrequency) : 24,
   };
 
+  var sound = typeof device !== 'undefined' && device.platform == 'Android' ? 'file://sound.mp3' : 'file://beep.caf';
+
+  $scope.winHealthHackChanged = function() {
+    if ($scope.settings.winHealthHack) return;
+    setTimeout(function() {
+      $scope.settings.winHealthHack = true;
+      $scope.$apply();
+    }, 700);
+  };
+
+  $scope.notificationTimeChanged = function() {
+    localStorage.enableNotifications = JSON.stringify($scope.settings.enableNotifications);
+    localStorage.notificationTime = JSON.stringify($scope.settings.notificationTime);
+    localStorage.notificationFrequency = JSON.stringify($scope.settings.notificationFrequency);
+
+    if (typeof cordova === 'undefined') return;
+
+    cordova.plugins.notification.local.cancel(2, function() {
+      // Notification was cancelled
+      if ($scope.settings.enableNotifications) {
+        console.log('Created notification', $scope.settings.notificationTime, $scope.settings.notificationFrequency * 60);
+        cordova.plugins.notification.local.schedule({
+          id: 2,
+          title: 'Dont forget to take your meds',
+          message: 'And tell us how you feel.',
+          firstAt: $scope.settings.notificationTime,
+          every: $scope.settings.notificationFrequency * 60,
+          // sound: sound,
+          icon: 'resources/icon.png'
+        });
+      }
+    });
+
+
+  };
   $scope.toggleNotifications = function() {
     localStorage.enableNotifications = JSON.stringify($scope.settings.enableNotifications);
 
     var scheduleNotification = function() {
-      var sound = device.platform == 'Android' ? 'file://sound.mp3' : 'file://beep.caf';
       var date = new Date(Date.now() + 3 * 1000);
+
+      $scope.notificationTimeChanged();
 
       cordova.plugins.notification.local.schedule({
         id: 1,
         title: 'Dont forget to take your meds',
-        message: 'And dont tell us how you feel',
+        message: 'And tell us how you feel',
         at: date,
-        sound: sound,
+        // sound: sound,
         icon: 'resources/icon.png'
       });
+
     };
 
     if (typeof cordova !== 'undefined' && $scope.settings.enableNotifications) {
@@ -302,6 +345,10 @@ angular.module('starter.controllers', [])
         } else {
           scheduleNotification();
         }
+      });
+    } else if (typeof cordova !== 'undefined') {
+      cordova.plugins.notification.local.cancel(2, function() {
+        // Notification was cancelled
       });
     }
   };
@@ -331,7 +378,7 @@ angular.module('starter.controllers', [])
   $scope.values = {
     username: window.localStorage.username || "",
     usergender: window.localStorage.usergender || "",
-    userage: window.localStorage.userage || "",
+    userage: parseInt(window.localStorage.userage) || 30,
     usermedicalcondition: window.localStorage.usermedicalcondition || "",
     userproductiveday: window.localStorage.userproductiveday || "",
     userpainlocation: window.localStorage.userpainlocation || "",

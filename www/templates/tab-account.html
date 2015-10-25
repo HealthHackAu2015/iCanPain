@@ -1,12 +1,20 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
-      <ion-toggle ng-model="settings.enableFriends">
+      <ion-toggle ng-model="settings.winHealthHack" ng-click="winHealthHackChanged()">
         Win Health Hack
     </ion-toggle>
       <ion-toggle ng-model="settings.enableNotifications" ng-click="toggleNotifications()">
-        Enable Push Notifications
+        Enable Medication Reminder
       </ion-toggle>
+      <label class="item item-input" ng-show="settings.enableNotifications">
+        <span class="input-label">Reminder Time</span>
+        <input type="time" ng-model="settings.notificationTime" ng-blur="notificationTimeChanged()">
+      </label>
+      <label class="item item-input" ng-show="settings.enableNotifications">
+        <span class="input-label">Frequency (hours)</span>
+        <input type="number" ng-model="settings.notificationFrequency" ng-blur="notificationTimeChanged()">
+      </label>
       <div class="button-bar">
         <button class="button button-positive" ng-click="loadData('Shelly')">
           Load Shelly's Data
