@@ -10,11 +10,14 @@
 						</div>
 					</div>
 					<output>{{values.productivity}}</output>
+					<div>
+						<a class="button button-positive" style="float:right; float: right; font-size: small;" ng-click="addDetails('productivityDetails', 'productivityNextButton')">Can you tell me more?</a>
+					</div>
 				</div>
 			</div>
 			<div class="button-bar">
 				<a href="#/questions/activity" class="button icon-left ion-chevron-left button-clear button-positive">Back</a>
-				<a href="#/questions/mood" class="button icon-right ion-chevron-right button-positive">Next</a>
+				<a href="#/questions/mood" class="button icon-right ion-chevron-right button-positive" id="productivityNextButton">Next</a>
 			</div>
 		</div>
 	</ion-content>

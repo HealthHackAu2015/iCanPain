@@ -10,11 +10,14 @@
 							</div>
 						</div>
 						<output>{{values.pain}}</output>
+					<div>
+						<a class="button button-positive" style="float:right; float: right; font-size: small;" ng-click="addDetails('painDetails', 'painNextButton')">Can you tell me more?</a>
+					</div>
 				</div>
 			</div>
 			<div class="button-bar">
 				<a href="#/tab/chats" class="button icon-left ion-chevron-left button-clear button-positive">Cancel</a>
-				<a href="#/questions/activity" class="button icon-right ion-chevron-right button-positive">Next</a>
+				<a href="#/questions/activity" class="button icon-right ion-chevron-right button-positive" id="painNextButton">Next</a>
 			</div>
 		</div>
   </ion-content>

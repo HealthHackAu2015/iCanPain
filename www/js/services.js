@@ -48,7 +48,7 @@ angular.module('starter.services', ['ionic'])
     }
   };
 })
-.factory("EncouragmentPopups", function ($ionicPopup, $ionicPopover, $ionicBackdrop) {
+.factory("EncouragmentPopups", function ($ionicPopup) {
   var api = {};
 
   var positiveHeaders = ["Thank you for the data!"];
