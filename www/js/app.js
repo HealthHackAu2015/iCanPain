@@ -98,7 +98,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('doctor', {
     url: '/history/doctor',
-    templateUrl: 'templates/history-doctor.html'
+    templateUrl: 'templates/history-doctor.html',
+    controller: 'DoctorCtrl'
   })
   // Each tab has its own nav history stack:
 
