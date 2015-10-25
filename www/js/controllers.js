@@ -136,10 +136,6 @@ angular.module('starter.controllers', [])
           text: 'Your Weekly History'
         },
         colors: ['#F4AC1C'],
-        subtitle: {
-          text: document.ontouchstart === undefined ?
-            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-        },
         xAxis: {
           categories: series.xAxis
         },
