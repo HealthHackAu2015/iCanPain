@@ -32,7 +32,7 @@ angular.module('starter.controllers', [])
     series.pain = [];
     series.activity = [];
     series.productivity = [];
-    series.xAxis = []
+    series.xAxis = [];
 
     series.weeklymood = [];
     series.weeklypain = [];
@@ -46,14 +46,14 @@ angular.module('starter.controllers', [])
     var weeklyproductivitytemp = 0;
     var weeklyextremepaintemp = 0;
 
-    var firstdate = data[0].Date
-    var weeklengthmicroseconds = 604800000
-    var activeweek = 0
-    var weekcounter = 0
+    var firstdate = data[0].Date;
+    var weeklengthmicroseconds = 604800000;
+    var activeweek = 0;
+    var weekcounter = 0;
 
     for (var i = 0; i < data.length; i++) {
       var date = parseDate(data[i].Date);
-      week = Math.floor((date-parseDate(firstdate))/weeklengthmicroseconds)
+      week = Math.floor((date-parseDate(firstdate))/weeklengthmicroseconds);
       series.mood.push([date, parseInt(data[i]['Mood slider score'])]);
       series.pain.push([date, parseInt(data[i]['Pain slider score'])]);
       series.activity.push([date, parseInt(data[i]['Physical Activity slider score'])]);
@@ -62,14 +62,14 @@ angular.module('starter.controllers', [])
       if (week == activeweek)
       {
         weeklymoodtemp = weeklymoodtemp+parseInt(data[i]['Mood slider score']);
-        weeklypaintemp = weeklypaintemp+parseInt(data[i]['Pain slider score'])
+        weeklypaintemp = weeklypaintemp+parseInt(data[i]['Pain slider score']);
         weeklyactivitytemp = weeklyactivitytemp+parseInt(data[i]['Physical Activity slider score']);
         weeklyproductivitytemp = weeklyproductivitytemp+parseInt(data[i]['Productivity slider score']);
         if (parseInt(data[i]['Pain slider score']) >= 8)
         {
           weeklyextremepaintemp= weeklyextremepaintemp+1;
         }
-        weekcounter++
+        weekcounter++;
       }
       else
       {
@@ -94,14 +94,14 @@ angular.module('starter.controllers', [])
           weeklyextremepaintemp
         ]);
 
-        series.xAxis.push("wk "+String(week))
-        weekcounter = 0
+        series.xAxis.push("wk "+String(week));
+        weekcounter = 0;
         weeklymoodtemp = 0;
         weeklypaintemp = 0;
         weeklyactivitytemp = 0;
         weeklyproductivitytemp = 0;
         weeklyextremepaintemp = 0;
-        activeweek = week
+        activeweek = week;
       }
     }
    return series;
@@ -111,8 +111,9 @@ angular.module('starter.controllers', [])
   var initChart = function() {
     $(function() {
       var series = buildSeries();
-      activedata = series.weeklypain
+      activedata = series.weeklypain;
 
+      console.log('inittttt')
       chart = new Highcharts.Chart({
         chart: {
            renderTo: 'container',
@@ -162,7 +163,7 @@ angular.module('starter.controllers', [])
     };
     chart.series[0].update(newSeriesOptions);
     chart.series[0].setData(series.weeklypain);
-  }
+  };
 
   $scope.ShowMood = function(){
     var series = buildSeries();
@@ -173,7 +174,7 @@ angular.module('starter.controllers', [])
     chart.series[0].update(newSeriesOptions);
     chart.series[0].setData(series.weeklymood);
 
-  }
+  };
 
   $scope.ShowActivity = function(){
     var series = buildSeries();
@@ -377,6 +378,8 @@ angular.module('starter.controllers', [])
 
 
 .controller('InfoCtrl', function($scope) {
+})
+.controller('HistoryCtrl', function($scope) {
 })
 
 
