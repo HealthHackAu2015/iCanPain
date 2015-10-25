@@ -378,7 +378,7 @@ angular.module('starter.controllers', [])
 
   $scope.clearData = function() {
     window.localStorage.clear();
-    window.location = "/#/first-time";
+    window.location = "#/first-time";
   };
 
   $scope.loadData = function(filename) {
