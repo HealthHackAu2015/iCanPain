@@ -4,9 +4,9 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
-  $scope.$on('$ionicView.enter', function(e) {
-    initChart();
-  });
+   $scope.$on('$ionicView.enter', function(e) {
+     initChart();
+   });
 
   // parse a date in dd/mm/yyyy format
   var parseDate = function(input) {
@@ -20,82 +20,180 @@ angular.module('starter.controllers', [])
     var series = {};
     series.mood = [];
     series.pain = [];
+    series.activity = [];
+    series.productivity = [];
+    series.xAxis = []
+
+    series.weeklymood = [];
+    series.weeklypain = [];
+    series.weeklyactivity = [];
+    series.weeklyproductivity = [];
+    series.weeklyextremepain= [];
+
+    var weeklymoodtemp = 0;
+    var weeklypaintemp = 0;
+    var weeklyactivitytemp = 0;
+    var weeklyproductivitytemp = 0;
+    var weeklyextremepaintemp = 0;
+
+    var firstdate = data[0].Date
+    var weeklengthmicroseconds = 604800000
+    var activeweek = 0
+    var weekcounter = 0
 
     for (var i = 0; i < data.length; i++) {
       var date = parseDate(data[i].Date);
-      series.mood.push([date, parseInt(data[i]['Pain slider score'])]);
-      series.pain.push([date, parseInt(data[i]['Mood slider score'])]);
-    }
+      week = Math.floor((date-parseDate(firstdate))/weeklengthmicroseconds)
+      series.mood.push([date, parseInt(data[i]['Mood slider score'])]);
+      series.pain.push([date, parseInt(data[i]['Pain slider score'])]);
+      series.activity.push([date, parseInt(data[i]['Physical Activity slider score'])]);
+      series.productivity.push([date, parseInt(data[i]['Productivity slider score'])]);
 
-    return series;
+      if (week == activeweek)
+      {
+        weeklymoodtemp = weeklymoodtemp+parseInt(data[i]['Mood slider score']);
+        weeklypaintemp = weeklypaintemp+parseInt(data[i]['Pain slider score'])
+        weeklyactivitytemp = weeklyactivitytemp+parseInt(data[i]['Physical Activity slider score']);
+        weeklyproductivitytemp = weeklyproductivitytemp+parseInt(data[i]['Productivity slider score']);
+        if (parseInt(data[i]['Pain slider score']) >= 8)
+        {
+          weeklyextremepaintemp= weeklyextremepaintemp+1;
+        }
+        weekcounter++
+      }
+      else
+      {
+        series.weeklymood.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklymoodtemp/weekcounter*100)/100)
+        ]);
+        series.weeklypain.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklypaintemp/weekcounter*100)/100)
+        ]);
+        series.weeklyactivity.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklyactivitytemp/weekcounter*100)/100)
+        ]);
+        series.weeklyproductivity.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklyproductivitytemp/weekcounter*100)/100)
+        ]);
+        series.weeklyextremepain.push([
+          "wk "+String(week),
+          weeklyextremepaintemp
+        ]);
+
+        series.xAxis.push("wk "+String(week))
+        weekcounter = 0
+        weeklymoodtemp = 0;
+        weeklypaintemp = 0;
+        weeklyactivitytemp = 0;
+        weeklyproductivitytemp = 0;
+        weeklyextremepaintemp = 0;
+        activeweek = week
+      }
+    }
+   return series;
   };
+
 
   var initChart = function() {
     $(function() {
       var series = buildSeries();
+      activedata = series.weeklypain
 
-      $('#container').highcharts({
+      chart = new Highcharts.Chart({
         chart: {
-          zoomType: 'x'
+           renderTo: 'container',
+            defaultSeriesType: 'column',
+
         },
         title: {
-          text: 'Pain Impact over Time'
+          text: 'Your Weekly History'
         },
+        colors: ['#F4AC1C'],
         subtitle: {
           text: document.ontouchstart === undefined ?
             'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
         },
         xAxis: {
-          type: 'datetime'
+          categories: series.xAxis
         },
         yAxis: {
           title: {
             text: 'Pain Impact'
-          }
+          },
+          ceiling: 10
         },
         legend: {
           enabled: false
         },
-        plotOptions: {
-          area: {
-            fillColor: {
-              linearGradient: {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 1
-              },
-              stops: [
-                [0, Highcharts.getOptions().colors[0]],
-                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-              ]
-            },
-            marker: {
-              radius: 2
-            },
-            lineWidth: 1,
-            states: {
-              hover: {
-                lineWidth: 1
-              }
-            },
-            threshold: null
-          }
+         plotOptions: {
+           column: {
+                pointPadding: 0,
+                borderWidth: 0
+            }
         },
-
         series: [{
-          type: 'line',
-          name: 'Mood',
-          data: series.mood
-        }, {
-          type: 'line',
-          name: 'Pain',
-          data: series.pain
+          type: 'column',
+          name: 'Average Mood',
+          data: activedata
         }]
       });
     });
   };
 
+  $scope.ShowPain = function(){
+    var series = buildSeries();
+    var newSeriesOptions = {
+      name: "Average Pain",
+      color: '#F4AC1C'
+    };
+    chart.series[0].update(newSeriesOptions);
+    chart.series[0].setData(series.weeklypain);
+  }
+
+  $scope.ShowMood = function(){
+    var series = buildSeries();
+    var newSeriesOptions = {
+      name: "Average Mood",
+      color: '#4453C7'
+    };
+    chart.series[0].update(newSeriesOptions);
+    chart.series[0].setData(series.weeklymood);
+
+  }
+
+  $scope.ShowActivity = function(){
+    var series = buildSeries();
+    var newSeriesOptions = {
+      name: "Average Mood",
+      color: '#A7CAFB'
+    };
+    chart.series[0].update(newSeriesOptions);
+    chart.series[0].setData(series.weeklyactivity);
+  };
+
+  $scope.ShowProductivity = function(){
+    var series = buildSeries();
+    var newSeriesOptions = {
+      name: "Average Productivity",
+      color: '#15B659'
+    };
+    chart.series[0].update(newSeriesOptions);
+    chart.series[0].setData(series.weeklyproductivity);
+  };
+
+  $scope.ShowExtremePain= function(){
+    var series = buildSeries();
+    var newSeriesOptions = {
+      name: "Number of Extreme Pain Events",
+      color: '#A10018'
+    };
+    chart.series[0].update(newSeriesOptions);
+    chart.series[0].setData(series.weeklyextremepain);
+  }
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {})
