@@ -249,7 +249,7 @@ angular.module('starter.controllers', [])
         thismonthextreme =thismonthextreme + series.weeklyextremepain[i][1]/4;
       }
 
-     
+
 
       for (var i = series.xAxis.length-10; i<series.xAxis.length-6; i++)
       {
@@ -259,10 +259,10 @@ angular.module('starter.controllers', [])
         lastmonthproductivity = lastmonthproductivity + series.weeklyproductivity[i][1]/4;
         lastmonthextreme = lastmonthextreme + series.weeklyextremepain[i][1]/4;
   }
-      
+
       console.log([thismonthpain, thismonthactivity,thismonthproductivity,thismonthmood,thismonthextreme])
       console.log([lastmonthpain, lastmonthactivity,lastmonthproductivity,lastmonthmood,lastmonthextreme])
-      
+
       activedata = series.weeklypain;
       chart = new Highcharts.Chart({
         chart: {
@@ -332,7 +332,7 @@ angular.module('starter.controllers', [])
           type: 'column',
           name: 'Last 4 weeks',
           data: [
-          thismonthpain - lastmonthpain, 
+          thismonthpain - lastmonthpain,
           thismonthactivity - lastmonthactivity,
           thismonthproductivity - lastmonthproductivity,
           thismonthmood - lastmonthmood,
@@ -577,7 +577,6 @@ angular.module('starter.controllers', [])
 
   $scope.clearData = function() {
     window.localStorage.clear();
-    window.location = "#/first-time";
   };
 
   $scope.loadData = function(filename) {
@@ -585,7 +584,13 @@ angular.module('starter.controllers', [])
     $.get(path, function(csv) {
       var data = $.csv.toObjects(csv);
       window.localStorage.data = JSON.stringify(data);
-      window.location = "#/first-time";
+
+      window.localStorage.username = "Shelly";
+      window.localStorage.usergender = "Female";
+      window.localStorage.userage = 18;
+      window.localStorage.usermedicalcondition = 'Erythromelalgia';
+      window.localStorage.usermedications = 'Nurofen Plus';
+      window.localStorage.userpainlocation = 'Feet';
     });
   };
 
@@ -605,16 +610,16 @@ angular.module('starter.controllers', [])
 
 
 .controller('FirstTimeCtrl', function($scope) {
-  $scope.values = {
-    username: window.localStorage.username || "",
-    usergender: window.localStorage.usergender || "",
-    userage: parseInt(window.localStorage.userage) || 30,
-    usermedicalcondition: window.localStorage.usermedicalcondition || "",
-    usermedications: window.localStorage.usermedications || "",
-    userpainlocation: window.localStorage.userpainlocation || "",
-  };
-
-  $scope.$on('$ionicView.enter', function(e) {});
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.values = {
+      username: window.localStorage.username || "",
+      usergender: window.localStorage.usergender || "",
+      userage: parseInt(window.localStorage.userage) || 30,
+      usermedicalcondition: window.localStorage.usermedicalcondition || "",
+      usermedications: window.localStorage.usermedications || "",
+      userpainlocation: window.localStorage.userpainlocation || "",
+    };
+  });
 
   $scope.save = function() {
     window.localStorage.username = $scope.values.username;

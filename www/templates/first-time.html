@@ -11,12 +11,12 @@
 
 <div class="list">
   <h3>Gender</h3>
-  <label class="item item-radio">
-    <ion-radio ng-model="values.usergender" ng-value="'Male'">Male</ion-radio>
+  <label class="item item-radio" ng-model="values.usergender" value="Female">
+    <ion-radio ng-value="Male">Male</ion-radio>
     <i class="radio-icon ion-checkmark"></i>
-    <ion-radio ng-model="values.usergender" ng-value="'Female'">Female</ion-radio>
+    <ion-radio ng-value="Female">Female</ion-radio>
     <i class="radio-icon ion-checkmark"></i>
-    <ion-radio ng-model="values.usergender" ng-value="'Other'">Other</ion-radio>
+    <ion-radio ng-value="Other">Other</ion-radio>
     <i class="radio-icon ion-checkmark"></i>
   </label>
 </div>
@@ -91,7 +91,7 @@
   </li>
     <li class="item item-checkbox">
      <label class="checkbox">
-       <input type="checkbox">
+       <input type="checkbox" checked>
      </label>
      Feet
   </li>
