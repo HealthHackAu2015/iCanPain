@@ -112,15 +112,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats?from',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'HistoryCtrl'
-        }
-      }
-  })
   .state('tab.chats-from', {
     url: '/chats/:from',
     views: {

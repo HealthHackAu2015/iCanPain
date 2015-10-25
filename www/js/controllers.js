@@ -8,12 +8,6 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function ($scope, $stateParams, EncouragmentPopups) {
 
-  $scope.$on('$ionicView.enter', function (e) {
-    if ($stateParams.from && $stateParams.from.toLowerCase() == "questionaire") {
-      EncouragmentPopups.showEncouragement($scope);
-    }
-  });
-
    $scope.$on('$ionicView.enter', function(e) {
      initChart();
    });
@@ -207,9 +201,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {})
-
-.controller('QuestionsCtrl', function($scope) {
+.controller('QuestionsCtrl', function($scope, EncouragmentPopups) {
   $scope.$on('$ionicView.enter', function(e) {
     var vertRanges = document.getElementsByClassName("range-vertical");
     for (var i = 0; i < vertRanges.length; ++i) {
@@ -271,6 +263,7 @@ angular.module('starter.controllers', [])
       $scope.saveButtonText = 'Save';
       $scope.$apply();
     }, 2000);
+    EncouragmentPopups.showEncouragement($scope);
   };
 
 })
@@ -379,7 +372,12 @@ angular.module('starter.controllers', [])
 
 .controller('InfoCtrl', function($scope) {
 })
-.controller('HistoryCtrl', function($scope) {
+.controller('HistoryCtrl', function($scope, $stateParams, EncouragmentPopups) {
+  $scope.$on('$ionicView.enter', function (e) {
+    if ($stateParams.from && $stateParams.from.toLowerCase() == "questionaire") {
+      // EncouragmentPopups.showEncouragement($scope);
+    }
+  });
 })
 
 
