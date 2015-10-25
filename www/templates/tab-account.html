@@ -5,10 +5,10 @@
         Win Health Hack
       </ion-toggle>
       <ion-toggle ng-model="settings.enableNotifications" ng-click="toggleNotifications()">
-        Enable Push Notifications
+        Enable Medication Reminder
       </ion-toggle>
       <label class="item item-input" ng-show="settings.enableNotifications">
-        <span class="input-label">Start Time</span>
+        <span class="input-label">Reminder Time</span>
         <input type="time" ng-model="settings.notificationTime" ng-blur="notificationTimeChanged()">
       </label>
       <label class="item item-input" ng-show="settings.enableNotifications">

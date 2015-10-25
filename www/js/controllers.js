@@ -175,7 +175,7 @@ angular.module('starter.controllers', [])
     notificationFrequency: localStorage.notificationFrequency ? JSON.parse(localStorage.notificationFrequency) : 24,
   };
 
-  var sound = device.platform == 'Android' ? 'file://sound.mp3' : 'file://beep.caf';
+  var sound = typeof device !== 'undefined' && device.platform == 'Android' ? 'file://sound.mp3' : 'file://beep.caf';
 
   $scope.winHealthHackChanged = function() {
     if ($scope.settings.winHealthHack) return;
