@@ -1,7 +1,7 @@
 {
-  "name": "iCanPain",
+  "name": "PainPal",
   "version": "1.0.0",
-  "description": "iCanPain: An Ionic project",
+  "description": "PainPal: A pain management app",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
