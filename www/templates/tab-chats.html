@@ -1,19 +1,27 @@
-<ion-view view-title="History">
+<ion-view view-title="You">
   <ion-content>
-    <div class="card">
-      <a class="item item-text-wrap" id="card-red" href="#/history/calendar">
-        Calendar
-      </a>
-    </div>
-    <div class="card">
-      <a class="item item-text-wrap" id="card-blue" href="#/history/charts">
-        Charts
-      </a>
-    </div>
-    <div class="card">
-      <a class="item item-text-wrap" id="card-yellow" href="#/history/doctor">
-        Doctor
-      </a>
-    </div>
+    <ion-list>
+      <div class="button-bar" style="padding:10px">
+        <a style="text-align:left;" class="button  button-light" href="#/questions/pain">
+          <i style="margin-right:25px" class="icon ion-ios-compose-outline"></i>New Pain Entry
+        </a>
+      </div>
+      <div class="button-bar" style="padding:10px">
+        <a style="text-align:left;" class="button button-light" href="#/history/calendar">
+          <i style="margin-right:25px" class="icon ion-ios-calendar-outline"></i>Calendar
+        </a>
+      </div>
+      <div class="button-bar" style="padding:10px">
+        <a style="text-align:left;" class="button button-light" href="#/history/charts">
+          <i style="margin-right:25px" class="icon ion-stats-bars"></i>Charts
+        </a>
+      </div>
+      <div class="button-bar" style="padding:10px">
+        <a style="text-align:left;" class="button button-light" href="#/history/doctor">
+          <i style="margin-right:25px" class="icon ion-ios-medkit-outline"></i>Doctor's Notes
+        </a>
+      </div>
+
+    </ion-list>
   </ion-content>
 </ion-view>
