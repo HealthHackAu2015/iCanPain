@@ -253,7 +253,7 @@ angular.module('starter.controllers', [])
         thismonthextreme =thismonthextreme + series.weeklyextremepain[i][1]/4;
       }
 
-     
+
 
       for (var i = series.xAxis.length-10; i<series.xAxis.length-6; i++)
       {
@@ -263,10 +263,10 @@ angular.module('starter.controllers', [])
         lastmonthproductivity = lastmonthproductivity + series.weeklyproductivity[i][1]/4;
         lastmonthextreme = lastmonthextreme + series.weeklyextremepain[i][1]/4;
       }
-      
+
       console.log([thismonthpain, thismonthactivity,thismonthproductivity,thismonthmood,thismonthextreme])
       console.log([lastmonthpain, lastmonthactivity,lastmonthproductivity,lastmonthmood,lastmonthextreme])
-      
+
       activedata = series.weeklypain;
       chart = new Highcharts.Chart({
         chart: {
@@ -336,7 +336,7 @@ angular.module('starter.controllers', [])
           type: 'column',
           name: 'Last 4 weeks',
           data: [
-          thismonthpain - lastmonthpain, 
+          thismonthpain - lastmonthpain,
           thismonthactivity - lastmonthactivity,
           thismonthproductivity - lastmonthproductivity,
           thismonthmood - lastmonthmood,
@@ -522,7 +522,6 @@ angular.module('starter.controllers', [])
     $.get(path, function(csv) {
       var data = $.csv.toObjects(csv);
       window.localStorage.data = JSON.stringify(data);
-      window.location = "#/first-time";
     });
   };
 
