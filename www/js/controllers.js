@@ -98,6 +98,27 @@ angular.module('starter.controllers', [])
         activeweek = week;
       }
     }
+    series.weeklymood.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklymoodtemp/weekcounter*100)/100)
+        ]);
+    series.weeklypain.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklypaintemp/weekcounter*100)/100)
+        ]);
+    series.weeklyactivity.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklyactivitytemp/weekcounter*100)/100)
+        ]);
+    series.weeklyproductivity.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklyproductivitytemp/weekcounter*100)/100)
+        ]);
+    series.weeklyextremepain.push([
+          "wk "+String(week),
+          weeklyextremepaintemp
+        ]);
+    series.xAxis.push("wk "+String(week+1));
    return series;
   };
 
@@ -151,6 +172,7 @@ angular.module('starter.controllers', [])
 
   $scope.ShowPain = function(){
     var series = buildSeries();
+    console.log(series.weeklypain);
     var newSeriesOptions = {
       name: "Average Pain",
       color: '#F4AC1C'
