@@ -1,6 +1,10 @@
 angular.module('starter.controllers', [])
 
-.controller('GoalsCtrl', function($scope) {})
+.controller('GoalsCtrl', function($scope) {
+  $scope.$on('$ionicView.enter', function(e) {
+    window.location = '#/questions/pain';
+  });
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
@@ -202,7 +206,7 @@ angular.module('starter.controllers', [])
           message: 'And tell us how you feel.',
           firstAt: $scope.settings.notificationTime,
           every: $scope.settings.notificationFrequency * 60,
-          sound: sound,
+          // sound: sound,
           icon: 'resources/icon.png'
         });
       }
@@ -223,7 +227,7 @@ angular.module('starter.controllers', [])
         title: 'Dont forget to take your meds',
         message: 'And tell us how you feel',
         at: date,
-        sound: sound,
+        // sound: sound,
         icon: 'resources/icon.png'
       });
 
