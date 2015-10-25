@@ -386,6 +386,7 @@ angular.module('starter.controllers', [])
     $.get(path, function(csv) {
       var data = $.csv.toObjects(csv);
       window.localStorage.data = JSON.stringify(data);
+      window.location = "#/first-time";
     });
   };
 
