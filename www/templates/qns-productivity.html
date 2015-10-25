@@ -4,12 +4,12 @@
 			<div class="fill-height-or-more list card" style="flex:300; text-align:center;">
 				<h4 class="title">In the last 24 hours,<br> how productive were you?</h4>
 				<div class="fill-height-or-more item item-body" style="flex:1; overflow-x:hidden;">
+					<output style="font-size:24pt; height: 24pt;">{{values.productivity}}</output>
 					<div style=" padding-left:50%;flex:1;">
 						<div class="item range range-positive range-vertical" style="border: none;">
 							<input type="range" min="0" max="10" step="1" ng-model="values.productivity" />
 						</div>
 					</div>
-					<output>{{values.productivity}}</output>
 					<div>
 						<a class="button button-positive" style="float:right; float: right; font-size: small;" ng-click="addDetails('productivityDetails', 'productivityNextButton')">Can you tell me more?</a>
 					</div>
