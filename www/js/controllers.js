@@ -1,24 +1,3 @@
-angular.module('starter.controllers', [])
-
-.controller('GoalsCtrl', function($scope) {
-  $scope.$on('$ionicView.enter', function(e) {
-    window.location = '#/questions/pain';
-  });
-})
-
-.controller('ChatsCtrl', function ($scope, $stateParams, EncouragmentPopups) {
-
-  $scope.$on('$ionicView.enter', function (e) {
-    if ($stateParams.from && $stateParams.from.toLowerCase() == "questionaire") {
-      EncouragmentPopups.showEncouragement($scope);
-    }
-  });
-
-   $scope.$on('$ionicView.enter', function(e) {
-     initChart();
-   });
-
-  // parse a date in dd/mm/yyyy format
   var parseDate = function(input) {
     var parts = input.split('/');
     return Date.UTC(parts[2], parts[1] - 1, parts[0]);
@@ -104,16 +83,49 @@ angular.module('starter.controllers', [])
         activeweek = week;
       }
     }
+    series.weeklymood.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklymoodtemp/weekcounter*100)/100)
+        ]);
+    series.weeklypain.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklypaintemp/weekcounter*100)/100)
+        ]);
+    series.weeklyactivity.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklyactivitytemp/weekcounter*100)/100)
+        ]);
+    series.weeklyproductivity.push([
+          "wk "+String(week),
+          parseFloat(parseInt(weeklyproductivitytemp/weekcounter*100)/100)
+        ]);
+    series.weeklyextremepain.push([
+          "wk "+String(week),
+          weeklyextremepaintemp
+        ]);
+    series.xAxis.push("wk "+String(week+1));
    return series;
   };
 
+
+
+angular.module('starter.controllers', [])
+
+.controller('GoalsCtrl', function($scope) {
+  $scope.$on('$ionicView.enter', function(e) {
+    window.location = '#/questions/pain';
+  });
+})
+
+.controller('ChatsCtrl', function ($scope, $stateParams, EncouragmentPopups) {
+   $scope.$on('$ionicView.enter', function(e) {
+     initChart();
+   });
 
   var initChart = function() {
     $(function() {
       var series = buildSeries();
       activedata = series.weeklypain;
-
-      console.log('inittttt')
       chart = new Highcharts.Chart({
         chart: {
            renderTo: 'container',
@@ -124,10 +136,6 @@ angular.module('starter.controllers', [])
           text: 'Your Weekly History'
         },
         colors: ['#F4AC1C'],
-        subtitle: {
-          text: document.ontouchstart === undefined ?
-            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-        },
         xAxis: {
           categories: series.xAxis
         },
@@ -157,6 +165,7 @@ angular.module('starter.controllers', [])
 
   $scope.ShowPain = function(){
     var series = buildSeries();
+    console.log(series.weeklypain);
     var newSeriesOptions = {
       name: "Average Pain",
       color: '#F4AC1C'
@@ -204,12 +213,149 @@ angular.module('starter.controllers', [])
     };
     chart.series[0].update(newSeriesOptions);
     chart.series[0].setData(series.weeklyextremepain);
-  }
+  };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {})
+.controller('DoctorCtrl', function ($scope, $stateParams, EncouragmentPopups) {
+   $scope.$on('$ionicView.enter', function(e) {
+     initDoctorChart();
+   });
+   var initDoctorChart = function() {
+    $(function() {
+      var series = buildSeries();
+      if (series.xAxis.length <8)
+      {
+          return;
+      }
+      var thismonthmood = 0;
+      var thismonthpain = 0;
+      var thismonthactivity = 0;
+      var thismonthproductivity = 0;
+      var thismonthextreme = 0;
 
-.controller('QuestionsCtrl', function ($scope, $ionicPopup) {
+      var lastmonthmood = 0;
+      var lastmonthpain = 0;
+      var lastmonthactivity = 0;
+      var lastmonthproductivity = 0;
+      var lastmonthextreme = 0;
+
+      for (var i = series.xAxis.length-6; i<series.xAxis.length-2; i++)
+      {
+        thismonthmood = thismonthmood + series.weeklymood[i][1]/4;
+
+        thismonthpain = thismonthpain + series.weeklypain[i][1]/4;
+        thismonthactivity = thismonthactivity + series.weeklyactivity[i][1]/4;
+        thismonthproductivity = thismonthproductivity + series.weeklyproductivity[i][1]/4;
+        thismonthextreme =thismonthextreme + series.weeklyextremepain[i][1]/4;
+      }
+
+     
+
+      for (var i = series.xAxis.length-10; i<series.xAxis.length-6; i++)
+      {
+        lastmonthmood = lastmonthmood + series.weeklymood[i][1]/4;
+        lastmonthpain = lastmonthpain + series.weeklypain[i][1]/4;
+        lastmonthactivity = lastmonthactivity + series.weeklyactivity[i][1]/4;
+        lastmonthproductivity = lastmonthproductivity + series.weeklyproductivity[i][1]/4;
+        lastmonthextreme = lastmonthextreme + series.weeklyextremepain[i][1]/4;
+  }
+      
+      console.log([thismonthpain, thismonthactivity,thismonthproductivity,thismonthmood,thismonthextreme])
+      console.log([lastmonthpain, lastmonthactivity,lastmonthproductivity,lastmonthmood,lastmonthextreme])
+      
+      activedata = series.weeklypain;
+      chart = new Highcharts.Chart({
+        chart: {
+           renderTo: 'Doctorcontainer',
+            defaultSeriesType: 'column',
+
+        },
+        title: {
+          text: 'Your Last Month'
+        },
+        colors: ['#4453c7'],
+        xAxis: {
+          categories: ["Pain","Activity","Productivity","Mood","Extreme Pain"]
+        },
+        yAxis: {
+          title: {
+            text: 'Pain Impact'
+          },
+          ceiling: 10
+        },
+        legend: {
+          enabled: false
+        },
+         plotOptions: {
+           column: {
+                pointPadding: 0,
+                borderWidth: 0
+            }
+        },
+        series: [{
+          type: 'column',
+          name: 'Last 4 weeks',
+          data: [thismonthpain, thismonthactivity,thismonthproductivity,thismonthmood,thismonthextreme]
+        }]
+      });
+
+      chart = new Highcharts.Chart({
+        chart: {
+           renderTo: 'Doctorcontainer2',
+            defaultSeriesType: 'column',
+
+        },
+        title: {
+          text: 'Change since last month'
+        },
+        colors: ['#F4AC1C'],
+
+        xAxis: {
+          categories: ["Pain","Activity","Productivity","Mood","Extreme Pain"]
+        },
+        yAxis: {
+          title: {
+            text: 'Pain Impact'
+          },
+          ceiling: 10
+        },
+        legend: {
+          enabled: false
+        },
+         plotOptions: {
+           column: {
+                pointPadding: 0,
+                borderWidth: 0
+            }
+        },
+        series: [{
+          type: 'column',
+          name: 'Last 4 weeks',
+          data: [
+          thismonthpain - lastmonthpain, 
+          thismonthactivity - lastmonthactivity,
+          thismonthproductivity - lastmonthproductivity,
+          thismonthmood - lastmonthmood,
+          thismonthextreme - lastmonthextreme
+          ]
+        }]
+      });
+
+
+
+
+
+    });
+
+
+  };
+
+
+})
+
+
+
+.controller('QuestionsCtrl', function ($scope, $ionicPopup, EncouragmentPopups) {
   $scope.$on('$ionicView.enter', function(e) {
     var vertRanges = document.getElementsByClassName("range-vertical");
     for (var i = 0; i < vertRanges.length; ++i) {
@@ -318,6 +464,7 @@ angular.module('starter.controllers', [])
       $scope.saveButtonText = 'Save';
       $scope.$apply();
     }, 2000);
+    EncouragmentPopups.showEncouragement($scope);
   };
 
 })
@@ -410,7 +557,7 @@ angular.module('starter.controllers', [])
 
   $scope.clearData = function() {
     window.localStorage.clear();
-    window.location = "/#/first-time";
+    window.location = "#/first-time";
   };
 
   $scope.loadData = function(filename) {
@@ -418,6 +565,7 @@ angular.module('starter.controllers', [])
     $.get(path, function(csv) {
       var data = $.csv.toObjects(csv);
       window.localStorage.data = JSON.stringify(data);
+      window.location = "#/first-time";
     });
   };
 
@@ -426,7 +574,13 @@ angular.module('starter.controllers', [])
 
 .controller('InfoCtrl', function($scope) {
 })
-.controller('HistoryCtrl', function($scope) {
+
+.controller('HistoryCtrl', function($scope, $stateParams, EncouragmentPopups) {
+  $scope.$on('$ionicView.enter', function (e) {
+    if ($stateParams.from && $stateParams.from.toLowerCase() == "questionaire") {
+      // EncouragmentPopups.showEncouragement($scope);
+    }
+  });
 })
 
 

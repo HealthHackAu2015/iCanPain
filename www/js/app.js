@@ -98,7 +98,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('doctor', {
     url: '/history/doctor',
-    templateUrl: 'templates/history-doctor.html'
+    templateUrl: 'templates/history-doctor.html',
+    controller: 'DoctorCtrl'
   })
   // Each tab has its own nav history stack:
 
@@ -112,15 +113,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats?from',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'HistoryCtrl'
-        }
-      }
-  })
   .state('tab.chats-from', {
     url: '/chats/:from',
     views: {
@@ -146,6 +138,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
+      }
+    }
+  })
+  .state('tab.info', {
+    url: '/info',
+    views: {
+      'tab-info': {
+        templateUrl: 'templates/tab-info.html',
+        controller: 'InfoCtrl'
       }
     }
   });
