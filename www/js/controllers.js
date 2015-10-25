@@ -220,7 +220,7 @@ angular.module('starter.controllers', [])
     };
     chart.series[0].update(newSeriesOptions);
     chart.series[0].setData(series.weeklyextremepain);
-  }
+  };
 })
 
 .controller('QuestionsCtrl', function($scope, EncouragmentPopups) {
@@ -394,6 +394,7 @@ angular.module('starter.controllers', [])
 
 .controller('InfoCtrl', function($scope) {
 })
+
 .controller('HistoryCtrl', function($scope, $stateParams, EncouragmentPopups) {
   $scope.$on('$ionicView.enter', function (e) {
     if ($stateParams.from && $stateParams.from.toLowerCase() == "questionaire") {
